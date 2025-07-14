@@ -15,7 +15,7 @@ class AmostraAdmin(admin.ModelAdmin):
     list_display = ("id", "nome_cientifico", "mostrar_qrcode", "mostrar_url")
 
     def mostrar_qrcode(self, obj):
-        base_url = config("URL_TEST", default="https://127.0.0.1:8000")
+        base_url = config("URL_TEST", default="https://jardimufsm.online")
         amostra_url = f"{base_url}/listagem/{obj.id}"
 
         qr = qrcode.make(amostra_url)
@@ -35,15 +35,13 @@ class AmostraAdmin(admin.ModelAdmin):
         '''
         return mark_safe(html)
 
-
     def mostrar_url(self, obj):
 
-        base_url = config("URL_TEST", default="https://127.0.0.1:8000")
+        base_url = config("URL_TEST", default="https://jardimufsm.online")
         amostra_url = f"{base_url}/listagem/{obj.id}"
 
         link_html = f'<a href="{amostra_url}" target="_blank">{amostra_url}</a>'
         return mark_safe(link_html)
-
 
     mostrar_qrcode.short_description = "QR Code da Amostra"
     mostrar_url.short_description = "URL da Amostra"
