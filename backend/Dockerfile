@@ -16,6 +16,12 @@ ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=backend.settings
 ENV PYTHONPATH="backend"
 
+ENV DJANGO_SUPERUSER_USERNAME=admin \
+    DJANGO_SUPERUSER_PASSWORD=admin123 \
+    DJANGO_SUPERUSER_EMAIL=admin@admin.com
+
 EXPOSE 8000
 
-CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD python manage.py migrate && \
+    python manage.py createsuperuser --noinput || true && \
+    gunicorn backend.wsgi:application --bind 0.0.0.0:8000
